@@ -68,12 +68,12 @@
       if (/android/i.test(userAgent)) {
         window.location.href = twintDeepLink;
         setTimeout(() => {
-          window.location.href = "market://details?id=ch.twint.app";
+          window.location.href = "twint://";
         }, 1500);
       } else if (/iPad|iPhone|iPod/.test(userAgent)) {
         window.location.href = twintDeepLink;
         setTimeout(() => {
-          window.location.href = "https://apps.apple.com/ch/app/twint/id1240181199";
+          window.location.href = "twint://";
         }, 1500);
       } else {
         alert("Twint n'est pas disponible sur ce système.");
