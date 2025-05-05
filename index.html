@@ -56,19 +56,20 @@
   </div>
 
   <script>
-    const iosStoreUrl = "https://apps.apple.com/ch/app/twint/id1240181199";  // iOS App Store
-    const androidStoreUrl = "https://play.google.com/store/apps/details?id=ch.twint.android";  // Google Play Store
+    const iosStoreUrl = "https://apps.apple.com/ch/app/twint/id1240181199";  // Lien vers l'App Store pour iOS
+    const androidStoreUrl = "https://play.google.com/store/apps/details?id=ch.twint.android";  // Lien vers le Google Play Store pour Android
 
     function openTwint() {
-      // Détection de l'OS
+      // Détection du système d'exploitation de l'utilisateur
       const userAgent = navigator.userAgent || navigator.vendor || window.opera;
       if (/android/i.test(userAgent)) {
-        // Sur Android, redirige vers le Google Play Store si Twint n'est pas installé
+        // Si l'utilisateur est sur Android, rediriger vers le Google Play Store
         window.location.href = androidStoreUrl;
       } else if (/iPad|iPhone|iPod/.test(userAgent)) {
-        // Sur iOS, redirige vers l'App Store si Twint n'est pas installé
+        // Si l'utilisateur est sur iOS, rediriger vers l'App Store
         window.location.href = iosStoreUrl;
       } else {
+        // Si le système d'exploitation est autre, afficher un message d'erreur
         alert("Twint n'est pas disponible sur ce système.");
       }
     }
