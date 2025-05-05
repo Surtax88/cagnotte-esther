@@ -28,18 +28,25 @@
       border-radius: 15px;
       margin-bottom: 20px;
     }
-    button {
-      background-color: #007bff;
+    .heart-button {
+      background-color: #ff69b4;
       color: white;
       border: none;
-      padding: 10px 20px;
-      font-size: 16px;
-      border-radius: 10px;
+      padding: 15px 25px;
+      font-size: 18px;
+      border-radius: 50px;
       cursor: pointer;
       margin-top: 10px;
+      position: relative;
+      transition: background-color 0.3s ease;
     }
-    button:hover {
-      background-color: #0056b3;
+    .heart-button::before {
+      content: "❤";
+      font-size: 22px;
+      margin-right: 10px;
+    }
+    .heart-button:hover {
+      background-color: #e0559e;
     }
   </style>
 </head>
@@ -49,27 +56,26 @@
     <img src="cadeau.jpg" alt="Cadeau Esther" />
     <p>Aidez Esther à réaliser son rêve pour son anniversaire !</p>
 
-    <!-- Lien vers Twint -->
-    <p>Faites un don via Twint en cliquant sur le bouton ci-dessous :</p>
-    <button onclick="openTwint()">Faire un don via Twint</button>
-
+    <p>Faites un don via Twint en cliquant sur le cœur :</p>
+    <button class="heart-button" onclick="openTwint()">Faire un don</button>
   </div>
 
   <script>
-    const iosStoreUrl = "https://apps.apple.com/ch/app/twint/id1240181199";  // Lien vers l'App Store pour iOS
-    const androidStoreUrl = "https://play.google.com/store/apps/details?id=ch.twint.android";  // Lien vers le Google Play Store pour Android
-
     function openTwint() {
-      // Détection du système d'exploitation de l'utilisateur
       const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      const twintDeepLink = "twint://";
+
       if (/android/i.test(userAgent)) {
-        // Si l'utilisateur est sur Android, rediriger vers le Google Play Store
-        window.location.href = androidStoreUrl;
+        window.location.href = twintDeepLink;
+        setTimeout(() => {
+          window.location.href = "https://play.google.com/store/apps/details?id=ch.twint.android";
+        }, 1500);
       } else if (/iPad|iPhone|iPod/.test(userAgent)) {
-        // Si l'utilisateur est sur iOS, rediriger vers l'App Store
-        window.location.href = iosStoreUrl;
+        window.location.href = twintDeepLink;
+        setTimeout(() => {
+          window.location.href = "https://apps.apple.com/ch/app/twint/id1240181199";
+        }, 1500);
       } else {
-        // Si le système d'exploitation est autre, afficher un message d'erreur
         alert("Twint n'est pas disponible sur ce système.");
       }
     }
