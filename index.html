@@ -133,4 +133,18 @@
         `Merci ${name} ! On t’attend pour un big BBQ pour offrir la M5 à Esther !`;
 
       document.getElementById('name').value = '';
-      document.getElementById
+      document.getElementById('amount').value = '';
+    }
+
+    function downloadDonations() {
+      const blob = new Blob([JSON.stringify(dons, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'donateurs_esther.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
