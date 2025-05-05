@@ -63,12 +63,12 @@
   <script>
     function openTwint() {
       const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-      const twintDeepLink = "ch.twint";
+      const twintDeepLink = "twint://";
 
       if (/android/i.test(userAgent)) {
         window.location.href = twintDeepLink;
         setTimeout(() => {
-          window.location.href = "twint://";
+          window.location.href = "ch.twint";
         }, 1500);
       } else if (/iPad|iPhone|iPod/.test(userAgent)) {
         window.location.href = twintDeepLink;
