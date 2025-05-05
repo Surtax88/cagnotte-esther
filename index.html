@@ -54,16 +54,16 @@
   <div class="container">
     <h1>La M5 competition d’Esther <3</h1>
     <img src="cadeau.jpg" alt="Cadeau Esther" />
-    <p>Aidez Esther à réaliser son rêve pour son anniversaire !</p>
+    <p>Esther doit drifter pour son anniversaire !</p>
 
-    <p>Faites un don via Twint en cliquant sur le cœur :</p>
-    <button class="heart-button" onclick="openTwint()">Faire un don</button>
+    <p>Participe via Twint en cliquant sur le cœur et à toi les odeurs de pneus brûler:</p>
+    <button class="heart-button" onclick="openTwint()">Twinter le papa</button>
   </div>
 
   <script>
     function openTwint() {
       const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-      const twintDeepLink = "twint://";
+      const twintDeepLink = "ch.twint";
 
       if (/android/i.test(userAgent)) {
         window.location.href = twintDeepLink;
