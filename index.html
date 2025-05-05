@@ -68,7 +68,7 @@
       if (/android/i.test(userAgent)) {
         window.location.href = twintDeepLink;
         setTimeout(() => {
-          window.location.href = "ch.twint";
+          window.location.href = "intent://open?url=http://www.twint.ch/#Intent;scheme=twint;package=ch.twint;end";
         }, 1500);
       } else if (/iPad|iPhone|iPod/.test(userAgent)) {
         window.location.href = twintDeepLink;
