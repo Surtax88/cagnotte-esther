@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>La M5 competition d’Esther <3</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f8f8f8;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #333;
+    }
+    img {
+      max-width: 100%;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+    .progress-container {
+      background-color: #ddd;
+      border-radius: 30px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+    .progress-bar {
+      height: 30px;
+      background-color: #4CAF50;
+      width: 0%;
+      line-height: 30px;
+      color: white;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .input-group {
+      margin: 15px 0;
+    }
+    input[type="text"], input[type="number"] {
+      padding: 10px;
+      width: 80%;
+      max-width: 300px;
+      font-size: 16px;
+      margin: 5px auto;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>La M5 competition d’Esther <3</h1>
+    <img src="cadeau.jpg" alt="Cadeau Esther" />
+    <p>Aidez Esther à réaliser son rêve pour son anniversaire ! Elle a flashé sur cette incroyable voiture BMW électrique.</p>
+
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar">0%</div>
+    </div>
+
+    <div class="input-group">
+      <input type="text" id="name" placeholder="Ton prénom" />
+      <input type="number" id="amount" placeholder="Montant (CHF)" min="1" />
+    </div>
+    <button onclick="participer()">Participer</button>
+
+    <p id="thankYouMessage" style="margin-top: 20px; font-weight: bold;"></p>
+  </div>
+
+  <script>
+    const objectif = 440;
+    let total = 0;
+
+    function participer() {
+      const name = document.getElementById('name').value.trim();
+      const amount = parseFloat(document.getElementById('amount').value);
+
+      if (!name || isNaN(amount) || amount <= 0) {
+        alert(\"Merci d’entrer un prénom et un montant valide.\");
+        return;
+      }
+
+      total += amount;
+      let percent = Math.min((total / objectif) * 100, 100);
+      document.getElementById('progressBar').style.width = percent + '%';
+      document.getElementById('progressBar').textContent = Math.round(percent) + '%';
+
+      document.getElementById('thankYouMessage').textContent = `Merci ${name} ! On t’attend pour un big BBQ pour offrir la M5 à Esther !`;
+
+      document.getElementById('name').value = '';
+      document.getElementById('amount').value = '';
+    }
+  </script>
+</body>
+</html>
