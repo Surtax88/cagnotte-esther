@@ -28,20 +28,6 @@
       border-radius: 15px;
       margin-bottom: 20px;
     }
-    .progress-container {
-      background-color: #ddd;
-      border-radius: 30px;
-      overflow: hidden;
-      margin: 20px 0;
-    }
-    .progress-bar {
-      height: 30px;
-      background-color: #4CAF50;
-      width: 0%;
-      line-height: 30px;
-      color: white;
-      transition: width 0.4s ease;
-    }
     button {
       background-color: #007bff;
       color: white;
@@ -86,9 +72,9 @@
     <img src="cadeau.jpg" alt="Cadeau Esther" />
     <p>Aidez Esther à réaliser son rêve pour son anniversaire !</p>
 
-    <div class="progress-container">
-      <div class="progress-bar" id="progressBar">0%</div>
-    </div>
+    <!-- Lien vers Twint -->
+    <p>Faites un don via Twint en cliquant sur le bouton ci-dessous :</p>
+    <button onclick="openTwint()">Faire un don via Twint</button>
 
     <div class="input-group">
       <input type="text" id="name" placeholder="Ton prénom" />
@@ -106,12 +92,29 @@
     const objectif = 440;
     let dons = JSON.parse(localStorage.getItem('donateurs') || '[]');
 
-    function updateBar() {
-      const total = dons.reduce((sum, d) => sum + d.montant, 0);
-      const percent = Math.min((total / objectif) * 100, 100);
-      const bar = document.getElementById('progressBar');
-      bar.style.width = percent + '%';
-      bar.textContent = Math.round(percent) + '%';
+    function openTwint() {
+      // Essaye d'ouvrir l'application Twint avec un deep link
+      const twintUrl = "twint://";  // Deep link générique pour ouvrir Twint sur mobile
+      const iosStoreUrl = "https://apps.apple.com/ch/app/twint/id1240181199";  // iOS App Store
+      const androidStoreUrl = "https://play.google.com/store/apps/details?id=ch.twint.android";  // Google Play Store
+
+      // Détection de l'OS
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      if (/android/i.test(userAgent)) {
+        // Sur Android, tente d'ouvrir Twint, sinon redirige vers Google Play
+        window.location.href = twintUrl;
+        setTimeout(() => {
+          window.location.href = androidStoreUrl;
+        }, 2000);  // Redirection après 2 secondes si Twint n'est pas installé
+      } else if (/iPad|iPhone|iPod/.test(userAgent)) {
+        // Sur iOS, tente d'ouvrir Twint, sinon redirige vers l'App Store
+        window.location.href = twintUrl;
+        setTimeout(() => {
+          window.location.href = iosStoreUrl;
+        }, 2000);  // Redirection après 2 secondes si Twint n'est pas installé
+      } else {
+        alert("Twint n'est pas disponible sur ce système.");
+      }
     }
 
     function participer() {
@@ -126,27 +129,8 @@
       dons.push({ nom: name, montant: amount });
       localStorage.setItem('donateurs', JSON.stringify(dons));
 
-      updateBar();
-
       document.getElementById('thankYouMessage').textContent =
         `Merci ${name} ! On t’attend pour un big BBQ pour offrir la M5 à Esther !`;
 
       document.getElementById('name').value = '';
-      document.getElementById('amount').value = '';
-    }
-
-    function downloadDonations() {
-      const blob = new Blob([JSON.stringify(dons, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'donateurs_esther.json';
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    // Initialise à l'ouverture
-    updateBar();
-  </script>
-</body>
-</html>
+      document.getElementById
