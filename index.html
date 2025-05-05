@@ -41,29 +41,6 @@
     button:hover {
       background-color: #0056b3;
     }
-    .input-group {
-      margin: 15px 0;
-    }
-    input[type="text"], input[type="number"] {
-      padding: 10px;
-      width: 80%;
-      max-width: 300px;
-      font-size: 16px;
-      margin: 5px auto;
-      display: block;
-    }
-    #admin-download {
-      font-size: 12px;
-      background: none;
-      color: transparent;
-      position: absolute;
-      bottom: 5px;
-      right: 10px;
-      cursor: pointer;
-    }
-    #admin-download:hover {
-      color: gray;
-    }
   </style>
 </head>
 <body>
@@ -76,74 +53,24 @@
     <p>Faites un don via Twint en cliquant sur le bouton ci-dessous :</p>
     <button onclick="openTwint()">Faire un don via Twint</button>
 
-    <div class="input-group">
-      <input type="text" id="name" placeholder="Ton prénom" />
-      <input type="number" id="amount" placeholder="Montant (CHF)" min="1" />
-    </div>
-    <button onclick="participer()">Participer</button>
-
-    <p id="thankYouMessage" style="margin-top: 20px; font-weight: bold;"></p>
   </div>
 
-  <!-- Bouton invisible pour toi -->
-  <button id="admin-download" onclick="downloadDonations()">admin</button>
-
   <script>
-    const objectif = 440;
-    let dons = JSON.parse(localStorage.getItem('donateurs') || '[]');
+    const iosStoreUrl = "https://apps.apple.com/ch/app/twint/id1240181199";  // iOS App Store
+    const androidStoreUrl = "https://play.google.com/store/apps/details?id=ch.twint.android";  // Google Play Store
 
     function openTwint() {
-      // Essaye d'ouvrir l'application Twint avec un deep link
-      const twintUrl = "twint://";  // Deep link générique pour ouvrir Twint sur mobile
-      const iosStoreUrl = "https://apps.apple.com/ch/app/twint/id1240181199";  // iOS App Store
-      const androidStoreUrl = "https://play.google.com/store/apps/details?id=ch.twint.android";  // Google Play Store
-
       // Détection de l'OS
       const userAgent = navigator.userAgent || navigator.vendor || window.opera;
       if (/android/i.test(userAgent)) {
-        // Sur Android, tente d'ouvrir Twint, sinon redirige vers Google Play
-        window.location.href = twintUrl;
-        setTimeout(() => {
-          window.location.href = androidStoreUrl;
-        }, 2000);  // Redirection après 2 secondes si Twint n'est pas installé
+        // Sur Android, redirige vers le Google Play Store si Twint n'est pas installé
+        window.location.href = androidStoreUrl;
       } else if (/iPad|iPhone|iPod/.test(userAgent)) {
-        // Sur iOS, tente d'ouvrir Twint, sinon redirige vers l'App Store
-        window.location.href = twintUrl;
-        setTimeout(() => {
-          window.location.href = iosStoreUrl;
-        }, 2000);  // Redirection après 2 secondes si Twint n'est pas installé
+        // Sur iOS, redirige vers l'App Store si Twint n'est pas installé
+        window.location.href = iosStoreUrl;
       } else {
         alert("Twint n'est pas disponible sur ce système.");
       }
-    }
-
-    function participer() {
-      const name = document.getElementById('name').value.trim();
-      const amount = parseFloat(document.getElementById('amount').value);
-
-      if (!name || isNaN(amount) || amount <= 0) {
-        alert("Merci d’entrer un prénom et un montant valide.");
-        return;
-      }
-
-      dons.push({ nom: name, montant: amount });
-      localStorage.setItem('donateurs', JSON.stringify(dons));
-
-      document.getElementById('thankYouMessage').textContent =
-        `Merci ${name} ! On t’attend pour un big BBQ pour offrir la M5 à Esther !`;
-
-      document.getElementById('name').value = '';
-      document.getElementById('amount').value = '';
-    }
-
-    function downloadDonations() {
-      const blob = new Blob([JSON.stringify(dons, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'donateurs_esther.json';
-      a.click();
-      URL.revokeObjectURL(url);
     }
   </script>
 </body>
