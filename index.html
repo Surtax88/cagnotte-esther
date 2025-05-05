@@ -68,7 +68,7 @@
       if (/android/i.test(userAgent)) {
         window.location.href = twintDeepLink;
         setTimeout(() => {
-          window.location.href = "https://play.google.com/store/apps/details?id=ch.twint.android";
+          window.location.href = "market://details?id=ch.twint.app";
         }, 1500);
       } else if (/iPad|iPhone|iPod/.test(userAgent)) {
         window.location.href = twintDeepLink;
